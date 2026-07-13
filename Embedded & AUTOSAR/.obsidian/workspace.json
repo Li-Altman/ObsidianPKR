@@ -1,0 +1,245 @@
+{
+  "main": {
+    "id": "913e9b3fa5853e07",
+    "type": "split",
+    "children": [
+      {
+        "id": "e679d74be6ec5327",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ff3144d10fd27a98",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "AutoSAR/NM_Detailed.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "NM_Detailed"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "a6b2e2c6e263c88b",
+    "type": "split",
+    "children": [
+      {
+        "id": "0c409f1374e99778",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d030f8fe5db2abf3",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "24e5d46480cacaa1",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "9decdd1593ed1005",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "6ce282fa7b89e2e8",
+    "type": "split",
+    "children": [
+      {
+        "id": "562f78622948a12e",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c8d212b1ab6c5427",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "反向链接"
+            }
+          },
+          {
+            "id": "ee39c32489f6f282",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "出链"
+            }
+          },
+          {
+            "id": "3cbedf2d56f17e02",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "f17c318c4936c006",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "c2b0deb7a68f66ca",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "AutoSAR/NM_Detailed.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "NM_Detailed 的大纲"
+            }
+          },
+          {
+            "id": "9884655f8788dfb0",
+            "type": "leaf",
+            "state": {
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "关系图谱"
+            }
+          },
+          {
+            "id": "50c6b8377b0ff11b",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
+          },
+          {
+            "id": "cbc87015fb864b7c",
+            "type": "leaf",
+            "state": {
+              "type": "claudian-view",
+              "state": {},
+              "icon": "bot",
+              "title": "Claudian"
+            }
+          }
+        ],
+        "currentTab": 7
+      }
+    ],
+    "direction": "horizontal",
+    "width": 660.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
+      "realclaudian:Open Claudian": false,
+      "publish:发布更改": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "ff3144d10fd27a98",
+  "lastOpenFiles": [
+    "新建 文本文档.txt",
+    "AutoSAR/AutoSAR.zip",
+    "AutoSAR/CanTrcv_Detailed.md",
+    "AutoSAR/CanDrv_Detailed.md",
+    "AutoSAR/BSW (Basic Software Modules)/CanSM/CanSM.md",
+    "AutoSAR/NM_Detailed.md",
+    "AutoSAR/NM_Detailed.md.tmp.24800.887fe2ea9309",
+    "AutoSAR/SchM_Detailed.md",
+    "AutoSAR/SchM_Detailed.md.tmp.24800.eb818deb726e",
+    "AutoSAR/CanTrcv_Detailed.md.tmp.24800.334e46cfe18b",
+    "AutoSAR/BSW (Basic Software Modules)/CanSM/CanDrv_Detailed.md",
+    "AutoSAR/BSW (Basic Software Modules)/CanSM/CanDrv_Detailed.md.tmp.24800.a187a6807799",
+    "AutoSAR/CAN_Communication_Stack_Architecture_Detailed.md",
+    "AutoSAR/BSW (Basic Software Modules)/CanSM/CAN_Communication_Stack_Architecture_Detailed.md",
+    "AutoSAR/BSW (Basic Software Modules)/CanSM/CAN_Communication_Stack_Architecture_Detailed.md.tmp.24800.41429f6e613e",
+    "readme.txt",
+    "Embedded & AutoSAR - Review.md",
+    "Embedded/Hardware/三极管 & MOS管.md",
+    "AutoSAR/BSW (Basic Software Modules)/CanIf/CanIf.md",
+    "AutoSAR/BSW (Basic Software Modules)/ComM/ComM.md",
+    "Embedded",
+    "AutoSAR",
+    "AutoSAR/CDD (Complex Driver Design)/CAN_TJA1043/CAN TJA10xx.md",
+    "Embedded/Hardware",
+    "未命名.canvas"
+  ]
+}
