@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AutoSAR/NM_Detailed.md",
+                "file": "A.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "NM_Detailed"
+              "title": "A"
             }
           }
         ]
@@ -154,13 +154,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "AutoSAR/NM_Detailed.md",
+                "file": "A.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "NM_Detailed 的大纲"
+              "title": "A 的大纲"
             }
           },
           {
@@ -211,17 +211,20 @@
       "bases:新建数据库": false,
       "realclaudian:Open Claudian": false,
       "publish:发布更改": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-git:Open Git source control": false,
+      "obshare:分享当前页面": false
     }
   },
-  "active": "ff3144d10fd27a98",
+  "active": "d030f8fe5db2abf3",
   "lastOpenFiles": [
+    "AutoSAR/BSW (Basic Software Modules)/CanSM/CanSM.md",
+    "A.md",
+    "AutoSAR/BSW (Basic Software Modules)/CanIf/CanIf.md",
+    "AutoSAR/NM_Detailed.md",
     "新建 文本文档.txt",
     "AutoSAR/AutoSAR.zip",
     "AutoSAR/CanTrcv_Detailed.md",
     "AutoSAR/CanDrv_Detailed.md",
-    "AutoSAR/BSW (Basic Software Modules)/CanSM/CanSM.md",
-    "AutoSAR/NM_Detailed.md",
     "AutoSAR/NM_Detailed.md.tmp.24800.887fe2ea9309",
     "AutoSAR/SchM_Detailed.md",
     "AutoSAR/SchM_Detailed.md.tmp.24800.eb818deb726e",
@@ -234,12 +237,10 @@
     "readme.txt",
     "Embedded & AutoSAR - Review.md",
     "Embedded/Hardware/三极管 & MOS管.md",
-    "AutoSAR/BSW (Basic Software Modules)/CanIf/CanIf.md",
     "AutoSAR/BSW (Basic Software Modules)/ComM/ComM.md",
     "Embedded",
     "AutoSAR",
     "AutoSAR/CDD (Complex Driver Design)/CAN_TJA1043/CAN TJA10xx.md",
-    "Embedded/Hardware",
     "未命名.canvas"
   ]
 }
