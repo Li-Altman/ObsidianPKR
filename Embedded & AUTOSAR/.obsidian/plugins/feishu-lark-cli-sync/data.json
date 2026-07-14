@@ -1,0 +1,14 @@
+{
+  "language": "zh-CN",
+  "larkCliPath": "C:\\Users\\UsrLi\\AppData\\Roaming\\npm\\lark-cli.cmd",
+  "targetTokenOrUrl": "Dc6rfT4Wnl4eFNdjPXfcfCkPngh",
+  "folderBindings": {},
+  "publishedFolders": {},
+  "titleSource": "file-name",
+  "openAfterSync": true,
+  "updateFrontmatter": true,
+  "autoSyncMode": "save",
+  "autoSyncDelaySeconds": 15,
+  "syncStrategy": "auto",
+  "stateCacheRetainLimit": 100
+}

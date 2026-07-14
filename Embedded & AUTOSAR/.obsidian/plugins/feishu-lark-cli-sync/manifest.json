@@ -1,0 +1,10 @@
+{
+	"id": "feishu-lark-cli-sync",
+	"name": "Feishu Lark CLI Sync",
+	"version": "0.1.17",
+	"minAppVersion": "1.5.0",
+	"description": "Publish and sync Markdown notes to Feishu/Lark Docs via lark-cli.",
+	"author": "wanghuan",
+	"authorUrl": "",
+	"isDesktopOnly": true
+}
