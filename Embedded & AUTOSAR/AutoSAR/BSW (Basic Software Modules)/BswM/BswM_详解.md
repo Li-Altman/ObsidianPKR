@@ -1,3 +1,6 @@
+---
+lark_doc_url: https://hcnp41r2kcpn.feishu.cn/docx/VctNdnbdaoWIdXxiOYjcjNErnFc
+---
 # BswM (Basic Software Mode Manager) 模块详解
 
 ---

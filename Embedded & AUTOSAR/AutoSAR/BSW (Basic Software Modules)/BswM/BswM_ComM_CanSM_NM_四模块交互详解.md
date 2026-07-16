@@ -1,3 +1,6 @@
+---
+lark_doc_url: https://hcnp41r2kcpn.feishu.cn/docx/NltmdvfQpoUQHpxs6WMcQCYdnUb
+---
 # BswM × ComM × CanSM × NM 四模块交互详解
 
 ---

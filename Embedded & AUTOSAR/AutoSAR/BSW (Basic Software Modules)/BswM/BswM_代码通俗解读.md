@@ -1,3 +1,6 @@
+---
+lark_doc_url: https://hcnp41r2kcpn.feishu.cn/docx/KT3bdqkwmoVTlexKS0ecTrMFnHf
+---
 # BswM 代码通俗解读 — 像讲故事一样看懂 AUTOSAR 代码
 
 ---
@@ -115,6 +118,77 @@ if (mode == BSWM_COMM_FULL_COMM) { /* 全通信 */ }
 
 > 💡 **设计思路**：枚举把"数字"翻译成了"人话"，让代码自解释(self-documenting)。
 
+#### 3.1.1 条件类型枚举 — "有哪些判断方式？"
+
+```c
+// 大白话：BswM 支持哪些"判断方式"？
+//         就像遥控器上有不同的按键：
+//         - "等于": 判断 A 是否等于 B
+//         - "不等于": 判断 A 是否不等于 B
+//         - "定时器": 等一段时间到了没有
+//         - "用户函数": 让你自己写判断逻辑
+//         - "AND": 多个条件同时满足
+//         - "OR": 多个条件满足其一就行
+
+typedef enum {
+    BSWM_COND_MODE_EQUAL,          /* 等于 — 通道的值 == 期望值？ */
+    BSWM_COND_MODE_NOT_EQUAL,      /* 不等于 — 通道的值 != 期望值？ */
+    BSWM_COND_TIMER_EXPIRED,       /* 定时器 — 预设时间到了吗？ */
+    BSWM_COND_CALLOUT_RESULT,      /* 用户函数 — 你写的函数返回 true？ */
+    BSWM_COND_LOGIC_AND,           /* 逻辑与 — 所有子条件都满足？ */
+    BSWM_COND_LOGIC_OR             /* 逻辑或 — 任一子条件满足？ */
+} BswM_ConditionType;
+```
+
+**这段代码在讲什么？**
+
+这 6 种类型就是 BswM 能理解的**所有判断方式**。你可以把它们想象成 6 种不同的"量尺"：
+
+| 条件类型 | 通俗理解 | 使用场景 |
+|---------|---------|---------|
+| `MODE_EQUAL` | "现在是不是 X 状态？" | 检查通信模式是不是 FULL_COMM |
+| `MODE_NOT_EQUAL` | "现在是不是不是 X 状态？" | 检查诊断模式是不是**不是** DEFAULT |
+| `TIMER_EXPIRED` | "等了多久了？到了没？" | 延迟执行，比如等 NVRAM 写完 |
+| `CALLOUT_RESULT` | "打个电话问问别人" | 调用你自定义的判断函数 |
+| `AND` | "所有条件都满足吗？" | (ECU运行中) **且** (不是诊断模式) |
+| `OR` | "有任何一个满足吗？" | (ECU在休眠) **或** (ECU在关闭) |
+
+#### 3.1.2 动作类型枚举 — "可以做哪些事？"
+
+```c
+// 大白话：BswM 条件满足后，可以"命令"其他模块做什么
+//         就像总经理的指令类型：
+//         - "去通知通信部": 设置通信模式
+//         - "去通知行政部": 切换 ECU 状态
+//         - "去存档": 写入 NVRAM
+//         - "去叫老王": 调用你写的函数
+
+typedef enum {
+    BSWM_ACTION_SET_COMM_MODE,       /* 设置通信模式 — 告诉 ComM 切换 */
+    BSWM_ACTION_SET_ECU_STATE,       /* 设置 ECU 状态 — 告诉 EcuM 切换 */
+    BSWM_ACTION_NVM_WRITE,           /* NVRAM 写入 — 告诉 NvM 保存数据 */
+    BSWM_ACTION_CALLOUT,             /* 用户回调 — 调用你注册的函数 */
+    BSWM_ACTION_SCHEDULE_SWITCH,     /* 切换调度表 — 调整任务的执行节奏 */
+    BSWM_ACTION_DELEGATE,            /* 委托给 SWC — 让应用层自己决定 */
+    BSWM_ACTION_SET_MODE_INDICATOR   /* 设置模式指示 — 通知其他模块模式变了 */
+} BswM_ActionType;
+```
+
+**这段代码在讲什么？**
+
+条件满足后 BswM 可以发出 7 种不同的"指令"。每个指令对应一个**具体的执行者**：
+
+```mermaid
+graph LR
+    A["条件满足了！"] --> B["BswM 发出指令"]
+    B --> C1["SET_COMM_MODE → 找 ComM"]
+    B --> C2["SET_ECU_STATE → 找 EcuM"]
+    B --> C3["NVM_WRITE → 找 NvM"]
+    B --> C4["CALLOUT → 找你的函数"]
+    B --> C5["SCHEDULE_SWITCH → 找 SchM"]
+    B --> C6["DELEGATE → 找应用层 SWC"]
+```
+
 ### 3.2 第二组概念：结构体 — "把相关的东西打包在一起"
 
 ```c
@@ -203,6 +277,19 @@ typedef struct {
         } schedule;
     } params;                 // ← 联合体：以上三个结构体共用一块内存
 } BswM_ActionTypeDef;
+
+// 逐字段讲解：
+// actionType = 动作类型。决定"我要做什么"——设置模式？调用函数？切换调度表？
+// params     = 动作参数。"做什么的具体内容"——设置成什么模式？调用哪个函数？
+
+// 以"设置通信模式"为例：
+//   actionType = BSWM_ACTION_SET_COMM_MODE  ← "我要设置通信模式"
+//   params.modeRequest.channelId = 0          ← "在 0 号通道上设"
+//   params.modeRequest.targetMode = 2         ← "设成 FULL_COMM(全通信)"
+
+// 以"调用用户回调"为例：
+//   actionType = BSWM_ACTION_CALLOUT          ← "我要调用用户函数"
+//   params.callout.calloutFunc = MyFunction    ← "调用 MyFunction 这个函数"
 ```
 
 **为什么需要联合体？**
@@ -210,6 +297,73 @@ typedef struct {
 因为一个"动作"只能是一种类型（要么设置模式、要么调用函数、要么切换调度表），不会同时是多种。用联合体**节省内存**——三个结构体如果各自占用，加起来可能 20 字节；用联合体，只需要最大的那个结构体的大小（可能 8 字节）。
 
 > 💡 **设计思路**：联合体 + 枚举的组合是一种"手动多态"——C 语言没有面向对象的继承和多态，就用这种方式实现"同一接口，不同行为"。
+
+### 3.5 再补两个结构体 — 通道配置和整体配置
+
+下面这两个结构体在 `BswM_Init()` 中用到过，现在来看看它们长什么样。
+
+```c
+// ===== 通道配置结构体 =====
+// 大白话：每个"模式通道"都有自己的"仪表盘"，
+//         上面显示着当前状态、待处理状态、引用计数等
+
+typedef struct {
+    uint8_t     channelId;      /* 通道编号 (0, 1, 2...) — 谁是第几号通道 */
+    uint8_t     defaultMode;    /* 默认模式 — 开机时的初始状态 */
+    uint8_t     currentMode;    /* 当前模式 — 现在正处于什么模式 */
+    uint8_t     pendingMode;    /* 待处理模式 — 别人请求切换到的模式 */
+    boolean     isCommitted;    /* 是否已生效 — true=当前模式已经稳定生效 */
+    uint8_t     refCount;       /* 引用计数 — 有多少个模块引用了这个通道 */
+} BswM_ChannelConfigType;
+
+// 逐字段讲解：
+// channelId    = 通道编号。就像每个员工有工号一样，每个通道有个 ID。
+// defaultMode  = 默认状态。就像电脑开机时的"桌面"——每次上电都回到这个状态。
+// currentMode  = 当前状态。就像"现在在哪个房间"——实时位置。
+// pendingMode  = 待处理状态。就像"有人叫你换房间，但你还没动身"——目的地。
+// isCommitted  = 是否已生效。"已经安顿好了吗？"——true = 安顿好了。
+// refCount     = 引用计数。"有多少人在用这个通道？"——没人用时可以安全切换。
+
+
+// ===== BswM 整体配置结构体 =====
+// 大白话：这是 BswM 的"总配置文件"，
+//         告诉 BswM：
+//         - 有哪些通道要管？
+//         - 有哪些规则要遵守？
+//         - 多长时间检查一次？
+
+typedef struct {
+    const BswM_ChannelConfigType*  channels;      /* 所有通道的配置数组 */
+    uint8_t                         numChannels;  /* 通道的总数量 */
+    const BswM_RuleTypeDef*         rules;         /* 所有规则的定义数组 */
+    uint16_t                        numRules;     /* 规则的总数量 */
+    uint32_t                        mainPeriodMs; /* 主函数的调用周期(毫秒) */
+} BswM_ConfigType;
+
+// 逐字段讲解：
+// channels   = 通道列表。像一本"部门花名册"——记录着每个通道的信息。
+// numChannels = 有几个通道。就是花名册上有几个人。
+// rules       = 规则列表。像一本"规章制度手册"。
+// numRules    = 有几条规则。手册上有几条制度。
+// mainPeriodMs = 多长时间检查一次。像"每 10 分钟巡逻一次"。
+```
+
+**为什么这些结构体要放在配置里？**
+
+因为不同的项目、不同的车型，需要的通道数和规则数**完全不同**：
+
+```
+项目 A（普通乘用车）：
+  - 通道数: 3 (通信、ECU状态、诊断)
+  - 规则数: 5
+
+项目 B（高端 SUV）：
+  - 通道数: 8 (通信×2、ECU状态、诊断、LIN、FR、ETH、安全)
+  - 规则数: 35
+
+同一个 BswM 代码，通过不同的配置就能适应这两个项目。
+这就是"配置驱动设计"的力量。
+```
 
 ---
 
@@ -294,15 +448,13 @@ Std_ReturnType BswM_ModeRequest(uint8_t channelId, uint8_t mode)
 
 ```mermaid
 graph LR
-    subgraph "立刻执行（不好）"
-        A["模块 A 请求模式"] --> B["BswM 立刻仲裁"]
-        B --> C["模块 B 还没准备好<br/>出错了"]
-    end
+    %% --- 立刻执行的情况（不好） ---
+    A["模块 A 请求模式"] --> B["BswM 立刻仲裁"]
+    B --> C["模块 B 还没准备好, 出错了"]
 
-    subgraph "延迟到主函数执行（好）"
-        D["模块 A 请求模式"] --> E["BswM 记下请求<br/>设标志位"]
-        F["主函数周期到"] --> G["BswM 统一仲裁<br/>所有模块都准备好了"]
-    end
+    %% --- 延迟到主函数执行的情况（好） ---
+    D["模块 A 请求模式"] --> E["BswM 记下请求, 设标志位"]
+    F["主函数周期到"] --> G["BswM 统一仲裁, 所有模块都准备好了"]
 ```
 
 > **原因**：BswM 的仲裁可能涉及到多个模块的状态变化，如果在中断上下文或任意时刻执行，可能会造成"条件还没准备全"的问题。统一在 `BswM_MainFunction()` 中处理，**保证了确定性**。
@@ -534,26 +686,57 @@ static void BswM_ExecuteSingleAction(const BswM_ActionTypeDef* action)
 }
 ```
 
+```c
+// ===== 补充：动作列表执行函数 =====
+// 大白话：一个动作列表就是"一组按顺序要做的动作"。
+//         这个函数就是"按顺序做这组动作"。
+//         比如你列了一张购物清单：[牛奶, 鸡蛋, 面包]
+//         这个函数就负责：去拿牛奶 → 去拿鸡蛋 → 去拿面包
+
+static void BswM_ExecuteActionList(const BswM_ActionListTypeDef* actionList)
+{
+    uint8_t i;
+
+    // ★ 安全检查：动作列表是空的吗？
+    if (actionList == NULL_PTR) {
+        return;  // "清单是空的，啥也不用干"
+    }
+
+    // ★ 遍历动作列表，逐个执行
+    for (i = 0; i < actionList->actionCount; i++) {
+        // 对清单上的每个动作，调用"单动作执行器"
+        BswM_ExecuteSingleAction(&actionList->actions[i]);
+        // ← 这里调用了刚才讲解的 BswM_ExecuteSingleAction()
+    }
+}
+
+/*
+ * 调用链条回顾：
+ *
+ * BswM_EvaluateRules()            ← 规则引擎：遍历规则表
+ *   └→ BswM_ExecuteActionList()   ← 找到匹配规则后，执行它的动作列表
+ *       └→ BswM_ExecuteSingleAction()  ← 逐个执行列表中的每个动作
+ */
+```
+
 **⚡ 关键技术点：间接调用 (Indirection)**
 
 你有没有注意到，BswM 的"执行动作"实际上**不自己做任何事情**——它只是**调用其他模块的函数**：
 
 ```mermaid
 graph TB
-    subgraph "BswM 的动作执行"
-        A["BswM 发现条件满足"]
-        A --> B["BswM 说：ComM，去设置通信模式"]
-        A --> C["BswM 说：EcuM，去切换状态"]
-        A --> D["BswM 说：NvM，去写入数据"]
-        A --> E["BswM 说：用户函数，去执行"]
-    end
+    %% --- BswM 的动作执行（下达指令） ---
+    A["BswM 发现条件满足"]
+    A --> B["BswM 说：ComM，去设置通信模式"]
+    A --> C["BswM 说：EcuM，去切换状态"]
+    A --> D["BswM 说：NvM，去写入数据"]
+    A --> E["BswM 说：用户函数，去执行"]
 
-    subgraph "实际干活的人"
-        F["ComM 真的去配置通信"]
-        G["EcuM 真的去切换状态"]
-        H["NvM 真的去写存储"]
-        I["用户函数做项目特有的事"]
-    end
+    %% --- 实际干活的人（执行指令） ---
+    F["ComM 真的去配置通信"]
+    G["EcuM 真的去切换状态"]
+    H["NvM 真的去写存储"]
+    I["用户函数做项目特有的事"]
 
     B --> F
     C --> G
@@ -654,7 +837,435 @@ void BswM_MainFunction(void)
 
 ---
 
-## 六、BswM 代码中的"设计套路"总结
+## 六、完整实战案例 — 从零配置一个 BswM 项目
+
+这一章我们把前面学到的所有代码片段**拼在一起**，完成一个真实的 BswM 配置案例。
+
+### 6.1 场景设定
+
+我们要配置一个 BswM，让它实现以下行为：
+
+```
+场景 1: 正常行车
+  条件: ECU 正在运行 + 没有诊断
+  动作: → 请求 CAN 全通信 + 通知应用层
+
+场景 2: 诊断模式
+  条件: ECU 正在运行 + 诊断激活
+  动作: → 请求 CAN 静默通信 + 通知应用层
+
+场景 3: 休眠准备
+  条件: ECU 不在运行中
+  动作: → 请求关闭通信
+```
+
+### 6.2 第一步：定义枚举值
+
+```c
+// 文件: BswM_MyProject_Enum.h
+// 大白话：先定义好我们要用到的所有"选项"
+
+// 通信模式选项
+typedef enum {
+    MY_COMM_NO_COMM    = 0,    /* 无通信 */
+    MY_COMM_SILENT     = 1,    /* 静默通信 */
+    MY_COMM_FULL       = 2     /* 全通信 */
+} My_CommModeType;
+
+// 诊断模式选项
+typedef enum {
+    MY_DIAG_DEFAULT    = 0,    /* 正常模式 */
+    MY_DIAG_EXTENDED   = 1,    /* 扩展诊断 */
+    MY_DIAG_PROGRAMMING = 2    /* 编程模式 */
+} My_DiagModeType;
+
+// ECU 状态选项（简化版）
+typedef enum {
+    MY_ECU_STARTUP     = 0,    /* 启动中 */
+    MY_ECU_RUN         = 1,    /* 运行中 */
+    MY_ECU_SLEEP       = 2     /* 休眠中 */
+} My_EcuStateType;
+```
+
+### 6.3 第二步：定义通道和条件
+
+```c
+// 文件: BswM_MyProject_Cfg.c（一部分）
+// 大白话：定义 BswM 要管理的通道，以及各种判断条件
+
+#include "BswM_Cfg.h"
+
+// ===== 1. 定义模式通道 =====
+// 我需要 3 个通道：通信、诊断、ECU 状态
+//   通道 0 = 通信通道 (默认: 无通信)
+//   通道 1 = 诊断通道 (默认: 正常)
+//   通道 2 = ECU 状态通道 (默认: 运行中)
+
+const BswM_ChannelConfigType My_Channels[] = {
+    {
+        .channelId    = 0,                     /* 通信通道 */
+        .defaultMode  = (uint8_t)MY_COMM_NO_COMM,  /* 开机默认无通信 */
+        .currentMode  = (uint8_t)MY_COMM_NO_COMM,
+        .pendingMode  = (uint8_t)MY_COMM_NO_COMM,
+        .isCommitted  = TRUE,
+        .refCount     = 0,
+    },
+    {
+        .channelId    = 1,                     /* 诊断通道 */
+        .defaultMode  = (uint8_t)MY_DIAG_DEFAULT,   /* 开机默认正常 */
+        .currentMode  = (uint8_t)MY_DIAG_DEFAULT,
+        .pendingMode  = (uint8_t)MY_DIAG_DEFAULT,
+        .isCommitted  = TRUE,
+        .refCount     = 0,
+    },
+    {
+        .channelId    = 2,                     /* ECU 状态通道 */
+        .defaultMode  = (uint8_t)MY_ECU_RUN,        /* 开机默认运行中 */
+        .currentMode  = (uint8_t)MY_ECU_RUN,
+        .pendingMode  = (uint8_t)MY_ECU_RUN,
+        .isCommitted  = TRUE,
+        .refCount     = 0,
+    }
+};
+
+// ===== 2. 定义条件 =====
+// 把我们的场景条件"翻译"成 BswM 能理解的条件结构体
+
+// 条件 A: "ECU 正在运行中" → 通道2的值 == MY_ECU_RUN
+static const BswM_ConditionTypeDef Cond_EcuRunning = {
+    .type           = BSWM_COND_MODE_EQUAL,
+    .channelId      = 2,                      /* ECU 状态通道 */
+    .expectedValue  = (uint8_t)MY_ECU_RUN
+};
+
+// 条件 B: "诊断未激活" → 通道1的值 == MY_DIAG_DEFAULT
+static const BswM_ConditionTypeDef Cond_DiagInactive = {
+    .type           = BSWM_COND_MODE_EQUAL,
+    .channelId      = 1,                      /* 诊断通道 */
+    .expectedValue  = (uint8_t)MY_DIAG_DEFAULT
+};
+
+// 条件 C: "诊断已激活" → 通道1的值 != MY_DIAG_DEFAULT
+static const BswM_ConditionTypeDef Cond_DiagActive = {
+    .type           = BSWM_COND_MODE_NOT_EQUAL,
+    .channelId      = 1,
+    .expectedValue  = (uint8_t)MY_DIAG_DEFAULT
+};
+
+// 条件 D: "ECU 不在运行中" → 通道2的值 != MY_ECU_RUN
+static const BswM_ConditionTypeDef Cond_EcuNotRunning = {
+    .type           = BSWM_COND_MODE_NOT_EQUAL,
+    .channelId      = 2,
+    .expectedValue  = (uint8_t)MY_ECU_RUN
+};
+```
+
+### 6.4 第三步：组合条件（AND 逻辑）
+
+```c
+// 大白话：BswM 支持"多个条件同时满足"的判断。
+//         需要把多个条件打包成一个"组合条件"。
+//         就像做蛋糕需要"鸡蛋 AND 面粉 AND 糖"——缺一不可。
+
+// 场景1 的条件组合: (ECU运行中) AND (诊断未激活)
+// → 正常行车，全通信
+static const BswM_ConditionTypeDef* Cond_Normal_Items[] = {
+    &Cond_EcuRunning,      /* 条件1: ECU 在运行 */
+    &Cond_DiagInactive     /* 条件2: 没有诊断 */
+};
+static const BswM_ConditionTypeDef Cond_Normal = {
+    .type           = BSWM_COND_LOGIC_AND,    /* 类型 = AND（都要满足） */
+    .subConditions  = (const void*)Cond_Normal_Items,  /* 子条件列表 */
+    .subCount       = 2                       /* 2 个子条件 */
+};
+
+// 场景2 的条件组合: (ECU运行中) AND (诊断激活)
+// → 诊断模式，静默通信
+static const BswM_ConditionTypeDef* Cond_Diag_Items[] = {
+    &Cond_EcuRunning,      /* 条件1: ECU 在运行 */
+    &Cond_DiagActive       /* 条件2: 诊断激活 */
+};
+static const BswM_ConditionTypeDef Cond_DiagMode = {
+    .type           = BSWM_COND_LOGIC_AND,
+    .subConditions  = (const void*)Cond_Diag_Items,
+    .subCount       = 2
+};
+```
+
+**条件树的图示**：
+
+```mermaid
+graph TB
+    A1["1. 正常行车: AND (全部满足)"]
+    A1 --> B1["EQUAL: 通道2 == ECU_RUN"]
+    A1 --> B2["EQUAL: 通道1 == DIAG_DEFAULT"]
+
+    A2["2. 诊断模式: AND (全部满足)"]
+    A2 --> B3["EQUAL: 通道2 == ECU_RUN"]
+    A2 --> B4["NOT_EQUAL: 通道1 != DIAG_DEFAULT"]
+
+    A3["3. 休眠: 单一条件"]
+    A3 --> B5["NOT_EQUAL: 通道2 != ECU_RUN"]
+```
+
+### 6.5 第四步：定义动作和动作列表
+
+```c
+// 大白话：条件满足后，要执行什么操作。
+//         每个场景对应一个"动作列表"——一组按顺序执行的动作。
+
+// ===== 用户回调函数（我们自己写的） =====
+// 这些函数将在条件满足时被 BswM 调用
+
+void My_NormalMode_Notify(void) {
+    /* 场景1: 进入正常行车模式 */
+    /* 通知应用层：通信已建立，可以发报文了 */
+    SetAppCanMsgTxEnable(TRUE);     /* 允许发送应用报文 */
+    Log_Info("[BswM] 进入全通信模式");
+}
+
+void My_DiagMode_Notify(void) {
+    /* 场景2: 进入诊断模式 */
+    SetAppCanMsgTxEnable(FALSE);    /* 停止发送应用报文 */
+    Log_Info("[BswM] 进入静默通信模式（诊断）");
+}
+
+void My_SleepMode_Notify(void) {
+    /* 场景3: 进入休眠准备 */
+    PrepareForSystemSleep();        /* 准备系统休眠 */
+    Log_Info("[BswM] 进入休眠模式");
+}
+
+// ===== 动作列表 =====
+
+// 场景1 的动作列表: [设置通信模式为 FULL] + [调用用户通知函数]
+static const BswM_ActionTypeDef Actions_Normal[] = {
+    {
+        .actionType = BSWM_ACTION_SET_COMM_MODE,
+        .params.modeRequest = {
+            .channelId   = 0,                  /* 通信通道 0 */
+            .targetMode  = (uint8_t)MY_COMM_FULL  /* 设为全通信 */
+        }
+    },
+    {
+        .actionType = BSWM_ACTION_CALLOUT,
+        .params.callout.calloutFunc = My_NormalMode_Notify
+    }
+};
+static const BswM_ActionListTypeDef ActionList_Normal = {
+    .actions      = Actions_Normal,
+    .actionCount  = 2,           /* 2 个动作：先设模式，再通知应用层 */
+    .executionTimeout = 100      /* 最多等 100ms */
+};
+
+// 场景2 的动作列表: [设置通信模式为 SILENT] + [调用用户通知函数]
+static const BswM_ActionTypeDef Actions_Diag[] = {
+    {
+        .actionType = BSWM_ACTION_SET_COMM_MODE,
+        .params.modeRequest = {
+            .channelId   = 0,
+            .targetMode  = (uint8_t)MY_COMM_SILENT   /* 设为静默 */
+        }
+    },
+    {
+        .actionType = BSWM_ACTION_CALLOUT,
+        .params.callout.calloutFunc = My_DiagMode_Notify
+    }
+};
+static const BswM_ActionListTypeDef ActionList_Diag = {
+    .actions      = Actions_Diag,
+    .actionCount  = 2,
+    .executionTimeout = 100
+};
+
+// 场景3 的动作列表: [设置通信模式为 NO_COMM] + [调用用户通知函数]
+static const BswM_ActionTypeDef Actions_Sleep[] = {
+    {
+        .actionType = BSWM_ACTION_SET_COMM_MODE,
+        .params.modeRequest = {
+            .channelId   = 0,
+            .targetMode  = (uint8_t)MY_COMM_NO_COMM   /* 关闭通信 */
+        }
+    },
+    {
+        .actionType = BSWM_ACTION_CALLOUT,
+        .params.callout.calloutFunc = My_SleepMode_Notify
+    }
+};
+static const BswM_ActionListTypeDef ActionList_Sleep = {
+    .actions      = Actions_Sleep,
+    .actionCount  = 2,
+    .executionTimeout = 200
+};
+```
+
+### 6.6 第五步：组装规则表
+
+```c
+// 大白话：把条件和动作"绑定"在一起，形成完整的规则。
+//         "如果 XX 条件满足，就执行 YY 动作列表"
+
+/*
+ * 规则表配置逻辑：
+ *
+ * 规则 1（最高优先级）:
+ *   条件: (ECU运行中) AND (诊断激活)   → 诊断场景优先
+ *   动作: → SILENT_COMM
+ *   抢占: 是（诊断优先于正常通信）
+ *
+ * 规则 2（正常优先级）:
+ *   条件: (ECU运行中) AND (诊断未激活) → 正常行车
+ *   动作: → FULL_COMM
+ *   抢占: 是
+ *
+ * 规则 3（最低优先级）:
+ *   条件: (ECU不在运行中)              → 休眠
+ *   动作: → NO_COMM
+ *   抢占: 否
+ */
+
+const BswM_RuleTypeDef My_Rules[] = {
+
+    /* 规则 1: 诊断模式 → SILENT（优先级 0，最高） */
+    {
+        .ruleId          = 1,
+        .conditionRoot   = &Cond_DiagMode,      /* (ECU运行) AND (诊断激活) */
+        .priority        = 0,                    /* 最高优先级 */
+        .isPreemptive    = TRUE,                 /* 抢占式 */
+        .actionList      = &ActionList_Diag,     /* 执行静默通信动作 */
+        .deferMs         = 0                     /* 立即执行 */
+    },
+
+    /* 规则 2: 正常行车 → FULL_COMM（优先级 10） */
+    {
+        .ruleId          = 2,
+        .conditionRoot   = &Cond_Normal,         /* (ECU运行) AND (非诊断) */
+        .priority        = 10,                   /* 正常优先级 */
+        .isPreemptive    = TRUE,
+        .actionList      = &ActionList_Normal,
+        .deferMs         = 0
+    },
+
+    /* 规则 3: 休眠 → NO_COMM（优先级 20） */
+    {
+        .ruleId          = 3,
+        .conditionRoot   = &Cond_EcuNotRunning,  /* ECU不在运行 */
+        .priority        = 20,                   /* 低优先级 */
+        .isPreemptive    = FALSE,
+        .actionList      = &ActionList_Sleep,
+        .deferMs         = 50                    /* 延迟 50ms 执行 */
+    }
+};
+```
+
+### 6.7 第六步：组装总配置
+
+```c
+// 大白话：把所有零件拼在一起，形成 BswM 的完整配置
+
+const BswM_ConfigType My_BswM_Config = {
+    .channels     = My_Channels,                 /* 3 个通道 */
+    .numChannels  = 3,                           /* 通道数量 */
+    .rules        = My_Rules,                    /* 3 条规则 */
+    .numRules     = 3,                           /* 规则数量 */
+    .mainPeriodMs = 10                           /* 每 10ms 检查一次 */
+};
+
+// ===== 最终：在系统初始化时调用 =====
+// 这个调用通常放在 EcuM 的初始化序列中：
+//
+// void EcuM_Init(void) {
+//     ...
+//     BswM_Init(&My_BswM_Config);   ← 把配好的"总文件"交给 BswM
+//     ...
+// }
+```
+
+### 6.8 完整的执行过程推演
+
+假设现在 ECU 正在运行，突然诊断模块激活：
+
+```c
+// ===== 诊断模块发起请求 =====
+// 诊断模块（Dcm）检测到诊断会话激活，通知 BswM
+BswM_ModeRequest(1, MY_DIAG_EXTENDED);
+//     ↑          ↑
+//  "诊断通道"   "设置为扩展诊断模式"
+//
+// BswM 做了什么：
+//   1. 把通道1的 pendingMode 设为 MY_DIAG_EXTENDED
+//   2. 设 BswM_ArbitrationPending = TRUE
+//   3. 立即返回（不着急，等主函数）
+
+
+// ===== BswM_MainFunction 周期到 =====
+// BswM_MainFunction() 被调度执行
+//
+// 它调用 BswM_EvaluateRules()，开始遍历规则表：
+//
+//   规则 1: 条件 = (ECU运行中) AND (诊断激活)
+//     → ECU运行中? 通道2的currentMode == MY_ECU_RUN? 是 ✅
+//     → 诊断激活?   通道1的currentMode == ... 等等
+//       当前通道1的currentMode 还是 MY_DIAG_DEFAULT（还没更新呢！）
+//       → 不满足 ❌
+//
+//   规则 2: 条件 = (ECU运行中) AND (诊断未激活)
+//     → ECU运行中? 是 ✅
+//     → 诊断未激活? 通道1的currentMode == MY_DIAG_DEFAULT? 是 ✅
+//     → 条件满足！✅
+//     → 执行 ActionList_Normal: SetCommMode(FULL) + My_NormalMode_Notify()
+//     → 等等，现在本来就是 FULL_COMM 模式，没变化，正常
+//
+// 看起来什么都没发生？不对！
+
+
+// ===== 关键一步：ComM 的反馈 =====
+// 实际上，诊断模块会通过 ComM 通知 BswM：
+// ComM 说："诊断模块激活了，通信需求变了"
+//
+// BswM 再次被触发仲裁...
+// 这次，BswM 检查的是 pendingMode 不是 currentMode
+//
+// 或者更准确地说：
+// 在 AUTOSAR 标准实现中，Dcm 激活诊断会话时，
+// 会先通知 ComM → ComM 再通知 BswM
+// BswM 的规则检查通道1的 currentMode 时，
+// ComM 已经通过某种机制把通道1更新了
+
+
+// ===== 更真实的情况（简化版） =====
+// 真实 AUTOSAR 中，Dcm 激活诊断时：
+//
+// 步骤 1: Dcm_SetDiagnosticSession(EXTENDED)
+// 步骤 2: Dcm → ComM → BswM_ModeRequest(DIAG_CH, EXTENDED)
+// 步骤 3: BswM 仲裁 → 发现规则 1 匹配 → SILENT_COMM
+// 步骤 4: BswM → ComM_RequestComMode(CH_0, SILENT_COMM)
+// 步骤 5: ComM → CanSM_RequestComMode(CTRL_0, SILENT)
+// 步骤 6: CAN 控制器进入静默模式
+// 步骤 7: ComM 回调 BswM 确认
+// 步骤 8: BswM 更新通道0的 currentMode = SILENT
+```
+
+### 6.9 这本配置手册告诉了我们什么？
+
+把这个完整的配置从头看到尾，你应该已经发现了：
+
+```text
+BswM 的配置过程 = 填 6 张表：
+
+表 1: 通道配置表 — "要管几个通道？每个通道默认什么状态？"
+表 2: 条件定义表 — "有哪些判断条件？怎么判断？"
+表 3: 条件组合表 — "多个条件怎么组合？AND 还是 OR？"
+表 4: 动作定义表 — "条件满足后要做什么？"
+表 5: 动作列表表 — "多个动作的顺序是什么？"
+表 6: 规则表      — "条件和动作怎么配对？优先级如何？"
+```
+
+填完这 6 张表，BswM 的配置就完成了。**不需要写任何新的 if-else 逻辑**——BswM 的核心代码已经替你写好了判断和执行框架。
+
+---
+
+## 七、BswM 代码中的"设计套路"总结
 
 ### 6.1 代码中的模式一览
 
@@ -706,7 +1317,7 @@ if (isEngineRunning && isKeyInCar && !isDiagnosticActive) {
 
 ---
 
-## 七、一句话总结 BswM 的代码哲学
+## 八、一句话总结 BswM 的代码哲学
 
 > **BswM 的代码不是用来直接"干活"的，而是用来"管理"的。**
 >
@@ -720,12 +1331,11 @@ if (isEngineRunning && isKeyInCar && !isDiagnosticActive) {
 
 ```mermaid
 graph TB
-    subgraph "BswM 代码的四个组成部分"
-        CONF["1. 配置数据结构<br/>定义：规则是什么、条件是什么、动作是什么"]
-        INIT["2. 初始化代码<br/>开机时把配置加载好<br/>把所有状态复位"]
-        ARB["3. 仲裁引擎<br/>收到请求 → 评估条件 → 找到匹配规则"]
-        EXEC["4. 动作执行器<br/>根据规则 → 调用不同模块的函数"]
-    end
+    %% BswM 代码的四个组成部分
+    CONF["1. 配置数据结构<br/>定义：规则是什么、条件是什么、动作是什么"]
+    INIT["2. 初始化代码<br/>开机时把配置加载好<br/>把所有状态复位"]
+    ARB["3. 仲裁引擎<br/>收到请求 → 评估条件 → 找到匹配规则"]
+    EXEC["4. 动作执行器<br/>根据规则 → 调用不同模块的函数"]
 
     CONF --> INIT
     INIT --> ARB

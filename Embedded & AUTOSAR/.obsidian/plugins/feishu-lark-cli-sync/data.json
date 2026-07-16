@@ -10,5 +10,9 @@
   "autoSyncMode": "save",
   "autoSyncDelaySeconds": 15,
   "syncStrategy": "auto",
-  "stateCacheRetainLimit": 100
+  "stateCacheRetainLimit": 100,
+  "larkCliVersionCheck": {
+    "executable": "C:\\Users\\UsrLi\\AppData\\Roaming\\npm\\lark-cli.cmd",
+    "version": "1.0.69"
+  }
 }

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_代码通俗解读.md",
+                "file": "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_ComM_CanSM_NM_四模块交互详解.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "BswM_代码通俗解读"
+              "title": "BswM_ComM_CanSM_NM_四模块交互详解"
             }
           }
         ]
@@ -217,23 +217,26 @@
       "feishu-lark-cli-sync:同步到飞书": false
     }
   },
-  "active": "6c6d7572ef8b10a3",
+  "active": "d030f8fe5db2abf3",
   "lastOpenFiles": [
-    "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_ComM_CanSM_NM_四模块交互详解.md",
-    "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_代码通俗解读.md",
-    "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_代码通俗解读.md.tmp.23528.a9f9c6fc68a9",
+    "AutoSAR/BSW (Basic Software Modules)/CanNM",
+    "未命名",
+    "AutoSAR/BSW (Basic Software Modules)/CanNM/CanNM.md",
+    "AutoSAR/BSW (Basic Software Modules)/NM/CanNM.md.tmp.24868.18d39e6f8655",
     "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_详解.md",
+    "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_代码通俗解读.md",
+    "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_代码通俗解读.md.tmp.12872.d068f5956c5d",
+    "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_代码通俗解读.md.tmp.12872.bc051ebd1abe",
+    "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_代码通俗解读.md.tmp.12872.3a92a2ac6957",
+    "AutoSAR/BSW (Basic Software Modules)/EcuM/EcuM.md",
+    "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_ComM_CanSM_NM_四模块交互详解.md",
+    "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_代码通俗解读.md.tmp.23528.a9f9c6fc68a9",
     "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_详解.md.tmp.23528.1808a8835121",
     "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_详解.md.tmp.23528.c1ac659418a3",
     "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_ComM_CanSM_NM_四模块交互详解.md.tmp.23528.d8f0f7cc42eb",
     "AutoSAR/BSW (Basic Software Modules)/NM/NM.md",
     "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_详解.md.tmp.23528.3e6f22593f55",
     "AutoSAR/BSW (Basic Software Modules)/ComM/ComM.md",
-    "AutoSAR/BSW (Basic Software Modules)/BswM",
-    "AutoSAR/BSW (Basic Software Modules)/ComM/ComM.md.tmp.23528.0dd104df641c",
-    "AutoSAR/BSW (Basic Software Modules)/ComM/ComM.md.tmp.23528.5423cb329cd9",
-    "AutoSAR/BSW (Basic Software Modules)/ComM/ComM.md.tmp.23528.e2856ce33c7a",
-    "AutoSAR/BSW (Basic Software Modules)/ComM/ComM.md.tmp.23528.b3c520376d02",
     "A.md",
     "AutoSAR/BSW (Basic Software Modules)/CanSM/CanSM.md",
     "AutoSAR/BSW (Basic Software Modules)/CanIf/CanIf.md",
