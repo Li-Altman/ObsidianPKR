@@ -1,3 +1,6 @@
+---
+lark_doc_url: https://hcnp41r2kcpn.feishu.cn/docx/QaDKdtKgzojG1YxPeeZcXgK3nue
+---
 # AUTOSAR EcuC 模块详解
 
 ## 目录

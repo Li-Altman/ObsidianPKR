@@ -1,3 +1,6 @@
+---
+lark_doc_url: https://hcnp41r2kcpn.feishu.cn/docx/J5x3dIgQaovETexb4LScpsunnyc
+---
 # AUTOSAR COM 模块详解
 
 ## 目录

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "AutoSAR/BSW (Basic Software Modules)/Com/Com.md",
+                "file": "AutoSAR/BSW (Basic Software Modules)/Common/CallbackNaming.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Com"
+              "title": "CallbackNaming"
             }
           }
         ]
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "6ce282fa7b89e2e8",
@@ -219,6 +218,7 @@
   },
   "active": "e1d0491d657a8545",
   "lastOpenFiles": [
+    "AutoSAR/BSW (Basic Software Modules)/Com/Com.md",
     "AutoSAR/BSW (Basic Software Modules)/Common/CallbackNaming.md",
     "AutoSAR/BSW (Basic Software Modules)/Common",
     "AutoSAR/Common/CallbackNaming.md",
@@ -230,7 +230,6 @@
     "AutoSAR/BSW (Basic Software Modules)/EcuC/EcuC.md",
     "AutoSAR/BSW (Basic Software Modules)/EcuC/EcuC.md.tmp.16324.516a2a72c0e9",
     "AutoSAR/BSW (Basic Software Modules)/EcuC",
-    "AutoSAR/BSW (Basic Software Modules)/Com/Com.md",
     "AutoSAR/BSW (Basic Software Modules)/Com/Com.md.tmp.16324.078180795b6d",
     "AutoSAR/BSW (Basic Software Modules)/Com",
     "AutoSAR/BSW (Basic Software Modules)/CanNM",

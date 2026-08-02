@@ -1,3 +1,6 @@
+---
+lark_doc_url: https://hcnp41r2kcpn.feishu.cn/docx/HeCjdguY7o8t4hxxvqhcU0xOnYc
+---
 # AUTOSAR CAN 邮箱（Mailbox）详解
 
 ## 目录
