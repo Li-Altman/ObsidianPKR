@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "ec31443679c95c2f",
+        "id": "d7494de50ea8a329",
         "type": "tabs",
         "children": [
           {
-            "id": "e1d0491d657a8545",
+            "id": "10ed0b156f61fe40",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "AutoSAR/BSW (Basic Software Modules)/Common/CallbackNaming.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "CallbackNaming"
+              "title": "新标签页"
             }
           }
         ]
@@ -216,10 +212,24 @@
       "feishu-lark-cli-sync:同步到飞书": false
     }
   },
-  "active": "e1d0491d657a8545",
+  "active": "d030f8fe5db2abf3",
   "lastOpenFiles": [
-    "AutoSAR/BSW (Basic Software Modules)/Com/Com.md",
+    "AutoSAR/BSW (Basic Software Modules)/NM/NM_StateMachine.md",
+    "AutoSAR/BSW (Basic Software Modules)/WatchDog/Wdg.md",
+    "AutoSAR/BSW (Basic Software Modules)/WatchDog",
+    "AutoSAR/BSW (Basic Software Modules)/GPT/GPT.md",
+    "AutoSAR/BSW (Basic Software Modules)/GPT",
+    "AutoSAR/BSW (Basic Software Modules)/CanTrcv/CanHOH.md",
+    "Embedded/Software/STM32F1X/STM32F103C8T6_启动文件汇编语法详解.md",
+    "Embedded/Software/STM32F1X/STM32F103C8T6_内存映射_启动文件_链接文件_ELF详解.md",
+    "Embedded/Software/STM32F1X/STM32F103C8T6_链接文件语法与符号表详解.md",
+    "Embedded/Software/STM32F1X",
+    "AutoSAR/BSW (Basic Software Modules)/NM/NM.md",
+    "Embedded/Software/STM32F103C8T6_启动文件汇编语法详解.md",
+    "Embedded/Software/STM32F103C8T6_内存映射_启动文件_链接文件_ELF详解.md",
+    "Embedded/Software/STM32F103C8T6_链接文件语法与符号表详解.md",
     "AutoSAR/BSW (Basic Software Modules)/Common/CallbackNaming.md",
+    "AutoSAR/BSW (Basic Software Modules)/Com/Com.md",
     "AutoSAR/BSW (Basic Software Modules)/Common",
     "AutoSAR/Common/CallbackNaming.md",
     "AutoSAR/Common",
@@ -231,28 +241,15 @@
     "AutoSAR/BSW (Basic Software Modules)/EcuC/EcuC.md.tmp.16324.516a2a72c0e9",
     "AutoSAR/BSW (Basic Software Modules)/EcuC",
     "AutoSAR/BSW (Basic Software Modules)/Com/Com.md.tmp.16324.078180795b6d",
-    "AutoSAR/BSW (Basic Software Modules)/Com",
-    "AutoSAR/BSW (Basic Software Modules)/CanNM",
-    "未命名",
     "AutoSAR/BSW (Basic Software Modules)/CanNM/CanNM.md",
     "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_详解.md",
     "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_代码通俗解读.md",
     "AutoSAR/BSW (Basic Software Modules)/EcuM/EcuM.md",
-    "AutoSAR/BSW (Basic Software Modules)/NM/NM.md",
     "AutoSAR/BSW (Basic Software Modules)/ComM/ComM.md",
     "A.md",
     "AutoSAR/BSW (Basic Software Modules)/CanSM/CanSM.md",
     "AutoSAR/BSW (Basic Software Modules)/CanIf/CanIf.md",
     "AutoSAR/NM_Detailed.md",
-    "AutoSAR/CanTrcv_Detailed.md",
-    "AutoSAR/CanDrv_Detailed.md",
-    "AutoSAR/SchM_Detailed.md",
-    "AutoSAR/BSW (Basic Software Modules)/CanSM/CanDrv_Detailed.md",
-    "AutoSAR/CAN_Communication_Stack_Architecture_Detailed.md",
-    "AutoSAR/BSW (Basic Software Modules)/CanSM/CAN_Communication_Stack_Architecture_Detailed.md",
-    "Embedded & AutoSAR - Review.md",
-    "Embedded/Hardware/三极管 & MOS管.md",
-    "AutoSAR/CDD (Complex Driver Design)/CAN_TJA1043/CAN TJA10xx.md",
     "未命名.canvas"
   ]
 }
