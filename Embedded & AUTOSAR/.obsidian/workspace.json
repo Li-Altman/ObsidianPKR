@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "d7494de50ea8a329",
+        "id": "53c262e5a978d124",
         "type": "tabs",
         "children": [
           {
-            "id": "10ed0b156f61fe40",
+            "id": "7890843221cee027",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "AutoSAR/BSW (Basic Software Modules)/ComM/COMM_NM_FULL_LIGHT_详解.md",
+                "mode": "preview",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "新标签页"
+              "title": "COMM_NM_FULL_LIGHT_详解"
             }
           }
         ]
@@ -214,11 +218,17 @@
       "feishu-lark-cli-sync:同步到飞书": false
     }
   },
-  "active": "d030f8fe5db2abf3",
+  "active": "7890843221cee027",
   "lastOpenFiles": [
+    "AutoSAR/BSW (Basic Software Modules)/ComM/ComM_NM_CanNM_交互详解.md",
+    "AutoSAR/BSW (Basic Software Modules)/ComM/COMM_NM_FULL_LIGHT_详解.md",
+    "AutoSAR/BSW (Basic Software Modules)/ComM/NetWorkManager.drawio",
+    "AutoSAR/BSW (Basic Software Modules)/ComM/ComM_NM_CanNM_状态机交互详解.md",
+    "AutoSAR/BSW (Basic Software Modules)/ComM/ComM.md",
+    "Embedded/Software/STM32F1X/STM32F103C8T6_内存映射_启动文件_链接文件_ELF详解.md",
+    "Embedded/Software/STM32F1X/STM32-MSP与PSP详解.md",
     "Embedded/Software/STM32F1X/Cortex-M特权模式与用户模式详解.md",
     "Embedded/Software/STM32F1X/STM32-通用寄存器与中断入栈出栈详解.md",
-    "Embedded/Software/STM32F1X/STM32-MSP与PSP详解.md",
     "AutoSAR/BSW (Basic Software Modules)/OS/STM32-通用寄存器与中断入栈出栈详解.md",
     "AutoSAR/BSW (Basic Software Modules)/OS/STM32-通用寄存器与中断入栈出栈详解.md.tmp.23036.7f1109188e28",
     "AutoSAR/BSW (Basic Software Modules)/OS/STM32-MSP与PSP详解.md",
@@ -232,14 +242,12 @@
     "AutoSAR/BSW (Basic Software Modules)/OS/OS_架构与模块概述.md.tmp.25972.3d2e61443dba",
     "AutoSAR/BSW (Basic Software Modules)/OS/OS_架构与模块概述.md.tmp.25972.7abc4c697aa7",
     "AutoSAR/BSW (Basic Software Modules)/OS/OS-Application详解.md",
-    "AutoSAR/BSW (Basic Software Modules)/OS/OS-Application详解.md.tmp.25972.906cbd5a670b",
     "AutoSAR/BSW (Basic Software Modules)/OS/OS_架构与模块概述.md",
     "AutoSAR/BSW (Basic Software Modules)/NM/NM_StateMachine.md",
     "AutoSAR/BSW (Basic Software Modules)/WatchDog/Wdg.md",
     "AutoSAR/BSW (Basic Software Modules)/GPT/GPT.md",
     "AutoSAR/BSW (Basic Software Modules)/CanTrcv/CanHOH.md",
     "Embedded/Software/STM32F1X/STM32F103C8T6_启动文件汇编语法详解.md",
-    "Embedded/Software/STM32F1X/STM32F103C8T6_内存映射_启动文件_链接文件_ELF详解.md",
     "Embedded/Software/STM32F1X/STM32F103C8T6_链接文件语法与符号表详解.md",
     "AutoSAR/BSW (Basic Software Modules)/NM/NM.md",
     "Embedded/Software/STM32F103C8T6_启动文件汇编语法详解.md",
@@ -248,10 +256,6 @@
     "AutoSAR/BSW (Basic Software Modules)/Common/CallbackNaming.md",
     "AutoSAR/BSW (Basic Software Modules)/Com/Com.md",
     "AutoSAR/Common/CallbackNaming.md",
-    "AutoSAR/BSW (Basic Software Modules)/BswM/BswM_ComM_CanSM_NM_四模块交互详解.md",
-    "AutoSAR/BSW (Basic Software Modules)/CallbackNaming.md",
-    "AutoSAR/BSW (Basic Software Modules)/EcuC/EcuC.md",
-    "AutoSAR/BSW (Basic Software Modules)/CanNM/CanNM.md",
     "未命名.canvas"
   ]
 }
