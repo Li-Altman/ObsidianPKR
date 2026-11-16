@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "53c262e5a978d124",
+        "id": "c3f153098bd63caa",
         "type": "tabs",
         "children": [
           {
-            "id": "7890843221cee027",
+            "id": "0227b054f816b21c",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "AutoSAR/BSW (Basic Software Modules)/ComM/COMM_NM_FULL_LIGHT_详解.md",
-                "mode": "preview",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "COMM_NM_FULL_LIGHT_详解"
+              "title": "新标签页"
             }
           }
         ]
@@ -218,10 +214,17 @@
       "feishu-lark-cli-sync:同步到飞书": false
     }
   },
-  "active": "7890843221cee027",
+  "active": "0227b054f816b21c",
   "lastOpenFiles": [
-    "AutoSAR/BSW (Basic Software Modules)/ComM/ComM_NM_CanNM_交互详解.md",
+    "AutoSAR/MCAL (Micro Abstract Layer)/AUTOSAR_MCU_NVR.md",
+    "AutoSAR/MCAL (Micro Abstract Layer)/AUTOSAR_Flash_Driver.md",
+    "AutoSAR/Base (Base)/BSW配置生成代码命名规则_Cfg_Lcfg_PBcfg.md",
+    "AutoSAR/BSW配置生成代码命名规则_Cfg_Lcfg_PBcfg.md",
+    "AutoSAR/BSW配置生成代码命名规则_Cfg_Lcfg_PBcfg.md.tmp.22748.06beae5eb742",
+    "AutoSAR/BSW配置生成代码命名规则_Cfg_Lcfg_PBcfg.md.tmp.22748.d3b63a5189b9",
+    "AutoSAR/BSW配置生成代码命名规则_Cfg_Lcfg_PBcfg.md.tmp.22748.a578e16eb9bc",
     "AutoSAR/BSW (Basic Software Modules)/ComM/COMM_NM_FULL_LIGHT_详解.md",
+    "AutoSAR/BSW (Basic Software Modules)/ComM/ComM_NM_CanNM_交互详解.md",
     "AutoSAR/BSW (Basic Software Modules)/ComM/NetWorkManager.drawio",
     "AutoSAR/BSW (Basic Software Modules)/ComM/ComM_NM_CanNM_状态机交互详解.md",
     "AutoSAR/BSW (Basic Software Modules)/ComM/ComM.md",
@@ -238,9 +241,6 @@
     "AutoSAR/BSW (Basic Software Modules)/OS/Cortex-M特权模式与用户模式详解.md.tmp.23036.3a520f0d67af",
     "AutoSAR/BSW (Basic Software Modules)/OS/Cortex-M特权模式与用户模式详解.md",
     "AutoSAR/BSW (Basic Software Modules)/OS/OS-Application详解.md.tmp.25972.2e70ef4f0d14",
-    "AutoSAR/BSW (Basic Software Modules)/OS/OS-Application详解.md.tmp.25972.cb578350b82c",
-    "AutoSAR/BSW (Basic Software Modules)/OS/OS_架构与模块概述.md.tmp.25972.3d2e61443dba",
-    "AutoSAR/BSW (Basic Software Modules)/OS/OS_架构与模块概述.md.tmp.25972.7abc4c697aa7",
     "AutoSAR/BSW (Basic Software Modules)/OS/OS-Application详解.md",
     "AutoSAR/BSW (Basic Software Modules)/OS/OS_架构与模块概述.md",
     "AutoSAR/BSW (Basic Software Modules)/NM/NM_StateMachine.md",
@@ -252,10 +252,6 @@
     "AutoSAR/BSW (Basic Software Modules)/NM/NM.md",
     "Embedded/Software/STM32F103C8T6_启动文件汇编语法详解.md",
     "Embedded/Software/STM32F103C8T6_内存映射_启动文件_链接文件_ELF详解.md",
-    "Embedded/Software/STM32F103C8T6_链接文件语法与符号表详解.md",
-    "AutoSAR/BSW (Basic Software Modules)/Common/CallbackNaming.md",
-    "AutoSAR/BSW (Basic Software Modules)/Com/Com.md",
-    "AutoSAR/Common/CallbackNaming.md",
     "未命名.canvas"
   ]
 }
