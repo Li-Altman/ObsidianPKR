@@ -214,8 +214,19 @@
       "feishu-lark-cli-sync:同步到飞书": false
     }
   },
-  "active": "0227b054f816b21c",
+  "active": "d030f8fe5db2abf3",
   "lastOpenFiles": [
+    "AutoSAR/Base (Base)/_verify.py",
+    "AutoSAR/Base (Base)/UDS_协议与ISO-TP流控帧详解.md",
+    "AutoSAR/Base (Base)/_build.py",
+    "AutoSAR/Base (Base)/_p6.md",
+    "AutoSAR/Base (Base)/_p5.md",
+    "AutoSAR/Base (Base)/_p4.md",
+    "AutoSAR/Base (Base)/_p3.md",
+    "AutoSAR/Base (Base)/_p2.md",
+    "AutoSAR/Base (Base)/_p1.md",
+    "AutoSAR/Config (Config Project)",
+    "AutoSAR/Config (config)",
     "AutoSAR/MCAL (Micro Abstract Layer)/AUTOSAR_MCU_NVR.md",
     "AutoSAR/MCAL (Micro Abstract Layer)/AUTOSAR_Flash_Driver.md",
     "AutoSAR/Base (Base)/BSW配置生成代码命名规则_Cfg_Lcfg_PBcfg.md",
@@ -237,21 +248,10 @@
     "AutoSAR/BSW (Basic Software Modules)/OS/STM32-MSP与PSP详解.md",
     "AutoSAR/BSW (Basic Software Modules)/OS/Cortex-M特权模式与用户模式详解.md.tmp.23036.717b9357616d",
     "AutoSAR/BSW (Basic Software Modules)/OS/Cortex-M特权模式与用户模式详解.md.tmp.23036.d4cfeb833d3a",
-    "AutoSAR/BSW (Basic Software Modules)/OS/Cortex-M特权模式与用户模式详解.md.tmp.23036.9a686586c1d8",
-    "AutoSAR/BSW (Basic Software Modules)/OS/Cortex-M特权模式与用户模式详解.md.tmp.23036.3a520f0d67af",
     "AutoSAR/BSW (Basic Software Modules)/OS/Cortex-M特权模式与用户模式详解.md",
-    "AutoSAR/BSW (Basic Software Modules)/OS/OS-Application详解.md.tmp.25972.2e70ef4f0d14",
     "AutoSAR/BSW (Basic Software Modules)/OS/OS-Application详解.md",
     "AutoSAR/BSW (Basic Software Modules)/OS/OS_架构与模块概述.md",
     "AutoSAR/BSW (Basic Software Modules)/NM/NM_StateMachine.md",
-    "AutoSAR/BSW (Basic Software Modules)/WatchDog/Wdg.md",
-    "AutoSAR/BSW (Basic Software Modules)/GPT/GPT.md",
-    "AutoSAR/BSW (Basic Software Modules)/CanTrcv/CanHOH.md",
-    "Embedded/Software/STM32F1X/STM32F103C8T6_启动文件汇编语法详解.md",
-    "Embedded/Software/STM32F1X/STM32F103C8T6_链接文件语法与符号表详解.md",
-    "AutoSAR/BSW (Basic Software Modules)/NM/NM.md",
-    "Embedded/Software/STM32F103C8T6_启动文件汇编语法详解.md",
-    "Embedded/Software/STM32F103C8T6_内存映射_启动文件_链接文件_ELF详解.md",
     "未命名.canvas"
   ]
 }
